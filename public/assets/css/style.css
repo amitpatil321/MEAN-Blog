@@ -1,0 +1,36 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background: #f1f2f6;
+}
+
+.pull-left{
+    float: left;
+}
+
+.pull-right{
+    float: right;
+}
+
+a:hover, a:visited{
+    color: #3bafda;
+}
+
+p{
+    margin: 5px 0px;
+}
+
+hr{
+    margin: 2px 0px;
+}
+
+.white{
+    color: #fff !important;
+}
+
+.spacing-10{
+    margin: 10px 0px;
+}
+.error{
+    color: red;
+}

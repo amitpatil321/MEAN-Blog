@@ -1,0 +1,39 @@
+<ol class="row breadcrumb breadcrumb-arrow">
+    <li><a href="#"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+    <li class="active"><span><i class="glyphicon glyphicon-article"></i> {{ post.slug }}</span></li>
+</ol> 
+<div class="row well">
+<div class="col-md-12">
+    <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" name="addPost">
+        <h4>Update Post</h4>
+        <div class="form-group" ng-if="message">
+            <div class="ng-class: white alert alert-{{message.type}}">{{ message.message }}</div>
+        </div>
+        <div class="form-group" ng-class="{'has-success': addPost.title.$valid && addPost.title.$touched, 'has-error': addPost.title.$invalid && addPost.title.$touched}">
+             <input type="text" name="title" class="form-control" placeholder="Post title" ng-model="post.title" required>
+             <span ng-if="!addPost.title.$valid && addPost.title.$touched" class="text-danger">Title is required</span>
+        </div> 
+        <div class="form-group" ng-class="{'has-success': addPost.slug.$valid && addPost.slug.$touched, 'has-error': addPost.slug.$invalid && addPost.slug.$touched}">
+             <input type="text" class="form-control" placeholder="Post slug" ng-model="post.slug" ng-init="post.title" name="slug" ng-pattern="/^[a-zA-Z0-9-]*$/" required> {{addPost.post.slug.$valid}}
+             <span ng-if="!addPost.slug.$valid && addPost.slug.$touched" class="text-danger">Please enter valid slug</span>
+        </div> 
+        <div class="form-group" ng-class="{'has-success': addPost.image.$valid && addPost.image.$touched, 'has-error': addPost.image.$invalid && addPost.image.$touched}">
+             <input type="text" name="image" class="form-control" placeholder="Post image" ng-model="post.image" required>
+             <span ng-if="!addPost.image.$valid && addPost.image.$touched" class="text-danger">Image is required</span>
+        </div>                 
+        <div class="form-group" ng-class="{'has-success': addPost.content.$valid && addPost.content.$touched, 'has-error': addPost.content.$invalid && addPost.content.$touched}">
+            <textarea class="form-control" name="content" ui-tinymce="tinymceOptions" ng-model="post.description" required></textarea>
+            <span ng-if="!addPost.content.$valid && addPost.content.$touched" class="text-danger">Title is required</span>
+        </div>
+        <div class="form-group">
+             <input type="text" class="form-control" placeholder="Tags" ng-model="post.tags">
+             <small>Comma seperated list of words Ex: php, javascript, css</small>
+        </div>        
+        <div class="form-group">
+            <div class="col-md-12 text-center">
+                <input type="button" class="btn btn-raised btn-info" value="Save Changes" ng-disabled="addPost.$invalid" ng-click="submitPost()" disabled="disabled">
+                <a class="btn btn-raised btn-warning white" href="#/home">Cancel</a> 
+            </div>
+        </div>                        
+    </form>      
+</div>

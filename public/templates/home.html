@@ -1,0 +1,45 @@
+<a class="btn btn-info pull-right white" href="#/add-post">Add New Post</a> 
+
+<ol class="row breadcrumb breadcrumb-arrow">
+    <li><a href="#"><i class="glyphicon glyphicon-home"></i> Home</a></li>
+</ol> 
+
+<div class="row">
+    <div class="col-md-12 well" ng-repeat="post in posts">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    <a href="#/post/{{ post.slug }}" class="post-title">{{ post.title }}</a> 
+                    <span class="pull-right"><a href="#/update-post/{{post.slug}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a></span>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 post-header-line">
+                <!--<h6>By <span class="glyphicon glyphicon-user"></span> <a href="#"> {{ post.author }}</a> on <span class="glyphicon glyphicon-calendar"></span> {{ post.publishedon }}</h6> -->
+                <h6>
+                    <span class="glyphicon glyphicon-user"></span> <a href="#"> {{ post.author }}</a> | 
+                    <span class="glyphicon glyphicon-calendar"></span> {{ post.publishedon | date : 'medium' }} |
+                    <span class="glyphicon glyphicon-comment"></span> {{ post.comments.length }}
+                </h6>
+            </div>
+        </div>
+        <div class="row post-content">
+            <div class="col-md-3">
+                <a href="#/post/{{ post.slug }}" ng-if="post.image">
+                    <img ng-src="{{post.image}}" alt="" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-md-9">
+                <p ng-bind-html="post.description | showonly : 500 | unsafe"></p>
+                <!--<p>{{ post.description | limitTo: 400 }} {{ post.description.length < 400 ? '' : '...'}}</p>-->
+                <p><a class="btn btn-default" href="#/post/{{ post.slug }}">Read more</button></a>
+                <div class="row">
+                    <a href="#/tags/{{tag}}" ng-repeat="tag in post.tags">
+                        <span class="badge badge-info">{{tag}}</span>
+                    </a>             
+                </div>            
+            </div>
+        </div>
+    </div>
+</div>
