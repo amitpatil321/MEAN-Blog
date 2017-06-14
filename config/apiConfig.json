@@ -1,8 +1,9 @@
 {
     "posts" : {
-        "get_all_posts" : "/api/posts",
-        "get_one_post"  : "/api/posts/:slug",
-        "create_post"   : "/api/posts",
-        "delete_post"   : "/api/posts"
+        "get_all_posts"   : "/api/posts",
+        "get_posts_by_tag": "/api/posts/tag/:tag",
+        "get_one_post"    : "/api/posts/:slug",
+        "create_post"     : "/api/posts",
+        "delete_post"     : "/api/posts"
     }    
 }

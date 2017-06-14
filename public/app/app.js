@@ -3,6 +3,7 @@
     var blogApp = angular.module("blogApp",[
         'ngRoute',
         'ui.tinymce',
+        'angularLazyImg',
         'blogApp.dataService',
         'blogApp.filters',
         'tinymce.service'
@@ -25,7 +26,11 @@
             .when("/update-post/:slug", {
                 templateUrl : "templates/postUpdate.html",
                 controller  : "postUpdateController"            
-            })                 
+            })    
+            .when("/tags/:tag", {
+                templateUrl : "templates/home.html",
+                controller  : "postsByTagController"            
+            })                                   
             .otherwise({
                 redirectTo: '/home'
             });     
@@ -37,6 +42,25 @@
         api.getAllPosts(function(response){
             $scope.posts = response;
         });
+
+        // Delete post
+        $scope.removePost = function(id){
+            if(confirm("Are you sure, you want to delete this post ?")){
+                api.deletePost(id, function(response){
+                    if(response.success)
+                        $scope.posts = response.data;
+                    else
+                        $scope.message = {type : "danger", message : response.message};    
+                });
+            }
+        }
+    }]);
+
+    // List posts by tag
+    blogApp.controller("postsByTagController",["$scope", "$routeParams", "api", function($scope, $routeParams, api){
+        api.getPostsByTag($routeParams.tag, function(response){
+            $scope.posts = response;
+        });        
     }]);
 
     // Show post details
@@ -67,7 +91,8 @@
 
         // Automatically set post slug from title by replacing space with dash
         $scope.$watch('post.title', function (newValue) {
-            $scope.post.slug = newValue.replace(/\s+/g, '-').toLowerCase();
+            if(newValue)
+                $scope.post.slug = newValue.replace(/[\W_]+/g, '-').toLowerCase();
         });
 
         // Add new post
@@ -98,7 +123,7 @@
         // Automatically set post slug from title by replacing space with dash
         $scope.$watch('post.title', function (newValue) {
             if(newValue)
-                $scope.post.slug = newValue.replace(/\s+/g, '-').toLowerCase();
+                $scope.post.slug = newValue.replace(/[\W_]+/g, '-').toLowerCase();
         });
 
         // Update post
@@ -112,5 +137,5 @@
         }
 
     }]);
-    
+
 })();

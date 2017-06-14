@@ -14,12 +14,12 @@
              <span ng-if="!addPost.title.$valid && addPost.title.$touched" class="text-danger">Title is required</span>
         </div> 
         <div class="form-group" ng-class="{'has-success': addPost.slug.$valid && addPost.slug.$touched, 'has-error': addPost.slug.$invalid && addPost.slug.$touched}">
-             <input type="text" class="form-control" placeholder="Post slug" ng-model="post.slug" ng-init="post.title" name="slug" ng-pattern="/^[a-zA-Z0-9-]*$/" required> {{addPost.post.slug.$valid}}
+             <input type="text" class="form-control" placeholder="Post slug" ng-model="post.slug" ng-init="post.title" name="slug" ng-pattern="/[\W_]+/g" required> {{addPost.post.slug.$valid}}
              <span ng-if="!addPost.slug.$valid && addPost.slug.$touched" class="text-danger">Please enter valid slug</span>
         </div> 
         <div class="form-group" ng-class="{'has-success': addPost.image.$valid && addPost.image.$touched, 'has-error': addPost.image.$invalid && addPost.image.$touched}">
-             <input type="text" name="image" class="form-control" placeholder="Post image" ng-model="post.image" required>
-             <span ng-if="!addPost.image.$valid && addPost.image.$touched" class="text-danger">Image is required</span>
+             <input type="url" name="image" class="form-control" placeholder="Post image" ng-model="post.image" required>
+             <span ng-if="!addPost.image.$valid && addPost.image.$touched" class="text-danger">Please enter valid image path</span>
         </div>                 
         <div class="form-group" ng-class="{'has-success': addPost.content.$valid && addPost.content.$touched, 'has-error': addPost.content.$invalid && addPost.content.$touched}">
             <textarea class="form-control" name="content" ui-tinymce="tinymceOptions" ng-model="post.description" required></textarea>

@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/public'));
 // app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 // conenct to mlab databse
-mongoose.connect(dbconfig.getDBConnectionString());
+mongoose.connect(dbconfig.getDBConnectionString(), { server: { reconnectTries: 10 } });
 
 // controllers
 postsController(app);

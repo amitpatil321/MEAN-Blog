@@ -34,3 +34,14 @@ hr{
 .error{
     color: red;
 }
+
+.action-icons {
+    display: none;
+}
+.action-icons span{
+    margin: 0px 2px; 
+}
+
+.blogpost:hover .action-icons {
+    display: inline;
+}

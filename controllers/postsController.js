@@ -12,6 +12,14 @@ module.exports =  function(app){
         });
     });  
 
+    // Get all posts by tag
+    app.get(apiConfig.posts.get_posts_by_tag, function(req,res){
+        postsModel.find({ "tags" : req.params.tag}).sort({publishedon : 'desc'}).exec(function(err, posts) { 
+            if(err || (!posts)) throw err;
+            res.send(posts);
+        });
+    });  
+
     // Get single post by id
     app.get(apiConfig.posts.get_one_post, function(req,res){
         postsModel.findOne({"slug": req.params.slug}, function(err, post){
@@ -31,9 +39,9 @@ module.exports =  function(app){
                 title      : req.body.title,
                 description: req.body.description,
                 slug       : req.body.slug,
-                tags       : req.body.tags
+                tags       : req.body.tags.toString().toLowerCase().split(",").map((item)=>item.trim())
             };
-            console.log(post);
+            //console.log(post);
             postsModel.findByIdAndUpdate(req.body._id, post, function(err, response){
                 if(err || (!response)) 
                     res.send(JSON.stringify({ success : false, message : 'Failed to update post' }));                    
@@ -51,10 +59,10 @@ module.exports =  function(app){
                         description: req.body.description,
                         author     : "Admin",
                         slug       : req.body.slug,
-                        tags       : req.body.tags.trim().split(","),
+                        // tags       : req.body.tags.trim().split(","),
+                        tags       : req.body.tags.split(",").map((item)=>item.trim()),
                         publishedon: new Date().getTime()
                     };  
-                    console.log(req.body.tags);     
                     postsModel.create(post, function(err, posts){
                         if(err || (!posts)) 
                             res.send(JSON.stringify({ success : false, message : 'Failed to add post' }));                        
@@ -70,8 +78,15 @@ module.exports =  function(app){
     // Delete post by id
     app.delete(apiConfig.posts.delete_post, function(req,res){
         postsModel.findByIdAndRemove(req.body.id, function(err, response){
-            if(err) throw err;
-            res.send(response);
+            console.log(response);
+            if(err || (!response)){
+                res.send(JSON.stringify({ success : false, message : 'Error deleting post' }));
+            }else{
+                postsModel.find({}).sort({publishedon : 'desc'}).exec(function(err, posts) { 
+                    if(err || (!posts)) throw err;
+                    res.send(JSON.stringify({success: true, data: posts}));
+                });                
+            }    
         });
     });
 }

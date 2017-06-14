@@ -16,7 +16,7 @@
                     <span class="glyphicon glyphicon-calendar"></span> {{ post.publishedon | date : 'medium' }} |
                     <span class="glyphicon glyphicon-comment"></span> {{ post.comments.length }}
                 </h6>                
-                <a href="#/tags/{{tag}}" ng-repeat="tag in post.tags">
+                <a href="#/tags/{{tag.replace(' ','-')}}" ng-repeat="tag in post.tags">
                     <span class="badge badge-info">{{tag}}</span>
                 </a>                
             </div>
@@ -25,7 +25,7 @@
         <div class="row post-content">
             <div class="col-md-12">
                 <div class="text-center">
-                    <img ng-src="{{post.image}}" class="img-rounded">
+                    <img lazy-img="{{post.image}}" class="img-rounded">
                 </div>
                 <p ng-bind-html="post.description | unsafe"></p>
             </div>
